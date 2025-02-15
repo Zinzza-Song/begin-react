@@ -1,4 +1,6 @@
-import React, { useState } from "react";
+import React, { useState, useRef } from "react";
+// useState : 값이 동적으로 변할 때 사용하는 React Hook
+// useRef : 렌더링에 쓰이지 않을 값을 참조할 때 사용하는 Reackt Hook
 
 function InputSample() {
   const [inputs, setInputs] = useState({
@@ -6,6 +8,7 @@ function InputSample() {
     nickname: "",
   });
 
+  const nameInput = useRef();
   const { name, nickname } = inputs;
 
   const onChange = (e) => {
@@ -19,11 +22,18 @@ function InputSample() {
       name: "",
       nickname: "",
     });
+    nameInput.current.focus();
   };
 
   return (
     <div>
-      <input name="name" placeholder="이름" onChange={onChange} value={name} />
+      <input
+        name="name"
+        placeholder="이름"
+        onChange={onChange}
+        value={name}
+        ref={nameInput}
+      />
       <input
         name="nickname"
         placeholder="닉네임"
