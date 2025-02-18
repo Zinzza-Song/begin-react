@@ -1,8 +1,24 @@
-import React, { useRef } from "react";
+import React, { useRef, useState } from "react";
+import CreateUser from "./CreateUser";
 import UserList from "./UserList";
 
 function App() {
-  const users = [
+  const [inputs, setInputs] = useState({
+    username: "",
+    email: "",
+  });
+
+  const { username, email } = inputs;
+
+  const onChange = (e) => {
+    const { name, value } = e.target;
+    setInputs({
+      ...inputs,
+      [name]: value,
+    });
+  };
+
+  const [users, setUsers] = useState([
     {
       id: 1,
       username: "zinzza",
@@ -18,16 +34,38 @@ function App() {
       username: "song",
       email: "song@naver.com",
     },
-  ];
+  ]);
 
   const nextId = useRef(4);
 
   const onCreate = () => {
-    console.log(nextId.current); // 4
+    const user = {
+      id: nextId.current,
+      ...inputs,
+    };
+
+    // setUsers([...users, user]); 추가 방법 1
+    setUsers(users.concat(user)); // 추가 방법 2
+
+    setInputs({
+      username: "",
+      email: "",
+    });
+
     nextId.current += 1;
   };
 
-  return <UserList users={users} />;
+  return (
+    <>
+      <CreateUser
+        username={username}
+        email={email}
+        onChange={onChange}
+        onCreate={onCreate}
+      />
+      <UserList users={users} />
+    </>
+  );
 }
 
 export default App;
