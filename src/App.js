@@ -59,7 +59,7 @@ function App() {
     };
 
     // setUsers([...users, user]); 추가 방법 1
-    setUsers(users.concat(user)); // 추가 방법 2
+    setUsers((users) => users.concat(user)); // 추가 방법 2
 
     setInputs({
       username: "",
@@ -67,25 +67,19 @@ function App() {
     });
 
     nextId.current += 1;
-  }, [inputs, users]);
+  }, [inputs]);
 
-  const onRemve = useCallback(
-    (id) => {
-      setUsers(users.filter((user) => user.id !== id));
-    },
-    [users]
-  );
+  const onRemve = useCallback((id) => {
+    setUsers((users) => users.filter((user) => user.id !== id));
+  }, []);
 
-  const onToogle = useCallback(
-    (id) => {
-      setUsers(
-        users.map((user) =>
-          user.id === id ? { ...user, active: !user.active } : user
-        )
-      );
-    },
-    [users]
-  );
+  const onToogle = useCallback((id) => {
+    setUsers((users) =>
+      users.map((user) =>
+        user.id === id ? { ...user, active: !user.active } : user
+      )
+    );
+  }, []);
 
   const count = useMemo(() => countActiveUsers(users), [users]);
   // useMemo를 사용안하면 화면이 리렌더링 될 때마다 계속 연산이됨
