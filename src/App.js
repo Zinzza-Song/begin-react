@@ -79,7 +79,7 @@ function App() {
 
   const count = useMemo(() => countActiveUsers(users), [users]);
   // useMemo를 사용안하면 화면이 리렌더링 될 때마다 계속 연산이됨
-  // useMemo를 사용하면 해당 값이 변할 때만 연산(최적화)
+  // useMemo를 사용하면 해당 값이 변할 때만 연산(기존의 값을 재사용 하여 최적화)
 
   return (
     <>
